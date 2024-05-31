@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Topo generado, cant topos activos: " + cantToposActivos);
+        // Reproducir sonido 
     }
 
     public void GolpeTopo(int indice)
@@ -139,6 +140,7 @@ public class GameManager : MonoBehaviour
         textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
 
         Debug.Log("Topo golpeado, puntuacion: " + puntuacion);
+        // Reproducir sonido
     }
 
     private void GameOver()
