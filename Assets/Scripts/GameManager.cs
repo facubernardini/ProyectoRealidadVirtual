@@ -149,6 +149,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("GameOver");
             CancelInvoke ("GenerarTopoAleatorio");
+            textoPuntuacionDerecha.text = "Perdiste! \n" + "Puntuación total: " + puntuacion;
+            textoPuntuacionIzquierda.text = "Perdiste! \n" + "Puntuación total: " + puntuacion;
             // Cambia a escena GameOver donde muestra puntuacion, animacion, otro sonido, etc
         }
     }
