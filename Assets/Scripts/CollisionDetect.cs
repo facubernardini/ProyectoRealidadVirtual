@@ -5,7 +5,7 @@ using UnityEngine;
 public class CollisionDetect : MonoBehaviour
 {
     public GameManager gameManager;
-
+ 
     private void OnTriggerEnter(Collider objecto)
     {
         if (objecto.gameObject.tag == "Topo1")
