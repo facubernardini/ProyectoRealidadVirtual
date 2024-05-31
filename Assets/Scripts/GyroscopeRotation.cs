@@ -17,9 +17,9 @@ public class GyroscopeRotation : MonoBehaviour
     {
         Vector3 newRotation = Vector3.zero;
 
-        newRotation.x = -2 * Input.gyro.rotationRateUnbiased.x;
-        newRotation.y = -2 * Input.gyro.rotationRateUnbiased.y;        
-        newRotation.z = 2 * Input.gyro.rotationRateUnbiased.z;
+        newRotation.x = -1 * Input.gyro.rotationRateUnbiased.x;
+        newRotation.y = -1 * Input.gyro.rotationRateUnbiased.y;        
+        newRotation.z = 1 * Input.gyro.rotationRateUnbiased.z;
 
         transform.Rotate(newRotation);
     }
