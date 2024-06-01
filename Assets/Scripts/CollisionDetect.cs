@@ -47,5 +47,40 @@ public class CollisionDetect : MonoBehaviour
         {
             gameManager.GolpeTopo(8);
         }
+
+        if (objecto.gameObject.tag == "Topo9")
+        {
+            gameManager.GolpeTopo(9);
+        }
+
+        if (objecto.gameObject.tag == "Topo10")
+        {
+            gameManager.GolpeTopo(10);
+        }
+
+        if (objecto.gameObject.tag == "Topo11")
+        {
+            gameManager.GolpeTopo(11);
+        }
+
+        if (objecto.gameObject.tag == "Topo12")
+        {
+            gameManager.GolpeTopo(12);
+        }
+
+        if (objecto.gameObject.tag == "Topo13")
+        {
+            gameManager.GolpeTopo(13);
+        }
+
+        if (objecto.gameObject.tag == "Topo14")
+        {
+            gameManager.GolpeTopo(14);
+        }
+
+        if (objecto.gameObject.tag == "Topo15")
+        {
+            gameManager.GolpeTopo(15);
+        }
     }
 }

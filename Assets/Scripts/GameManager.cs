@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private int puntuacion, cantToposActivos;
-    public GameObject topo1, topo2, topo3, topo4, topo5, topo6, topo7, topo8;
+    public GameObject topo1, topo2, topo3, topo4, topo5, topo6, topo7, topo8, topo9, topo10, topo11, topo12, topo13, topo14, topo15;
     public Text textoPuntuacionIzquierda, textoPuntuacionDerecha;
+    public AudioSource sonidoGolpe;
 
     void Start()
     {
@@ -26,8 +27,13 @@ public class GameManager : MonoBehaviour
         topo6.SetActive(false);
         topo7.SetActive(false);
         topo8.SetActive(false);
-
-        // PROBAR CAMARA DE VUFORIA PARA TENER MAS MOVILIDAD, PONER "CAJA" DE COLISION PARA PODER LIMITAR LA MOVILIDAD DEL PERSONAJE
+        topo9.SetActive(false);
+        topo10.SetActive(false);
+        topo11.SetActive(false);
+        topo12.SetActive(false);
+        topo13.SetActive(false);
+        topo14.SetActive(false);
+        topo15.SetActive(false);
     }
 
     void Update()
@@ -35,9 +41,15 @@ public class GameManager : MonoBehaviour
         GameOver();
     }
 
+    public void ComenzarJuego()
+    {
+        textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
+        InvokeRepeating("GenerarTopoAleatorio", 2, 4f);
+    }
+
     private void GenerarTopoAleatorio()
     {
-        int topo = Random.Range(1, 9);
+        int topo = Random.Range(1, 16);
 
         if (topo == 1 && !topo1.activeSelf)
         {
@@ -87,7 +99,48 @@ public class GameManager : MonoBehaviour
             cantToposActivos++;
         }
 
-        Debug.Log("Topo generado, cant topos activos: " + cantToposActivos);
+        if (topo == 9 && !topo9.activeSelf)
+        {
+            topo9.SetActive(true);
+            cantToposActivos++;
+        }
+
+        if (topo == 10 && !topo10.activeSelf)
+        {
+            topo10.SetActive(true);
+            cantToposActivos++;
+        }
+
+        if (topo == 11 && !topo11.activeSelf)
+        {
+            topo11.SetActive(true);
+            cantToposActivos++;
+        }
+
+        if (topo == 12 && !topo12.activeSelf)
+        {
+            topo12.SetActive(true);
+            cantToposActivos++;
+        }
+
+        if (topo == 13 && !topo13.activeSelf)
+        {
+            topo13.SetActive(true);
+            cantToposActivos++;
+        }
+
+        if (topo == 14 && !topo14.activeSelf)
+        {
+            topo14.SetActive(true);
+            cantToposActivos++;
+        }
+
+        if (topo == 15 && !topo15.activeSelf)
+        {
+            topo15.SetActive(true);
+            cantToposActivos++;
+        }
+
         // Reproducir sonido 
     }
 
@@ -134,12 +187,46 @@ public class GameManager : MonoBehaviour
             topo8.SetActive(false);
         }
 
+        if (indice == 9)
+        {
+            topo9.SetActive(false);
+        }
+
+        if (indice == 10)
+        {
+            topo10.SetActive(false);
+        }
+
+        if (indice == 11)
+        {
+            topo11.SetActive(false);
+        }
+
+        if (indice == 12)
+        {
+            topo12.SetActive(false);
+        }
+
+        if (indice == 13)
+        {
+            topo13.SetActive(false);
+        }
+
+        if (indice == 14)
+        {
+            topo14.SetActive(false);
+        }
+
+        if (indice == 15)
+        {
+            topo15.SetActive(false);
+        }
+
         cantToposActivos--;
         puntuacion++;
         textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
         textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
-
-        Debug.Log("Topo golpeado, puntuacion: " + puntuacion);
+        sonidoGolpe.Play();
         // Reproducir sonido
     }
 
