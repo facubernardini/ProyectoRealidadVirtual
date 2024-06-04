@@ -5,32 +5,43 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private int puntuacion, cantToposActivos;
     public GameObject topo1, topo2, topo3, topo4, topo5, topo6, topo7, topo8, topo9, topo10, topo11, topo12, topo13, topo14, topo15;
-    public Text textoPuntuacionIzquierda, textoPuntuacionDerecha;
+    public GameObject ARCamera;
+    public Text textoPuntuacionIzquierda, textoPuntuacionDerecha, textoTimerIzquierda, textoTimerDerecha;
     public AudioSource sonidoGolpe, sonidoMenu;
-    private bool modoPausa;
+    private bool modoPausa, juegoComenzado, gameOver;
+    private int puntuacion, cantToposActivos;
+    private int segundosRestantes;
 
     void Start()
     {
         puntuacion = 0;
         cantToposActivos = 0;
+        segundosRestantes = 60;
         modoPausa = false;
+        juegoComenzado = false;
+        gameOver = false;
 
         ActualizarPuntuacion();
         DesactivarTopos();
-        InvokeRepeating("GenerarTopoAleatorio", 2, 3f);
     }
 
     void Update()
     {
-        GameOver();
+        if (juegoComenzado)
+        {
+            GameOver();
+            FijarPosicionARCamera();
+            ActualizarTiempo();
+        }
     }
 
-    public void ComenzarJuego()
+    private void ComenzarJuego()
     {
+        juegoComenzado = true;
         ActualizarPuntuacion();
         InvokeRepeating("GenerarTopoAleatorio", 2, 4f);
+        InvokeRepeating("ContarTiempo", 0, 1f);
     }
 
     private void GenerarTopoAleatorio()
@@ -216,12 +227,19 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        if (cantToposActivos == 4)
+        if (segundosRestantes == 0)
         {
             CancelInvoke ("GenerarTopoAleatorio");
+            CancelInvoke("ContarTiempo");
             DesactivarTopos();
-            textoPuntuacionDerecha.text = "Perdiste! \n" + "Puntuación total: " + puntuacion;
-            textoPuntuacionIzquierda.text = "Perdiste! \n" + "Puntuación total: " + puntuacion;
+
+            textoPuntuacionDerecha.text = "¡Se terminó el tiempo! \n" + "Puntuación total: " + puntuacion;
+            textoPuntuacionIzquierda.text = "¡Se terminó el tiempo! \n" + "Puntuación total: " + puntuacion;
+
+            textoTimerDerecha.text = "";
+            textoTimerIzquierda.text = "";
+
+            gameOver = true;
             // Cambia a escena GameOver donde muestra puntuacion, animacion, otro sonido, etc
         }
     }
@@ -247,13 +265,34 @@ public class GameManager : MonoBehaviour
 
     private void ActualizarPuntuacion()
     {
-        textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
-        textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
+        if (!juegoComenzado)
+        {
+            textoPuntuacionIzquierda.text = "";
+            textoPuntuacionDerecha.text = "";
+            textoTimerIzquierda.text = "";
+            textoTimerDerecha.text = "";
+        }
+        else
+        {
+            textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
+            textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
+        }
+    }
+
+    private void FijarPosicionARCamera()
+    {
+        ARCamera.transform.position = new Vector3(0f, 1.2f, 0f);
     }
 
     public void AbrirMenu()
     {
-        if (!modoPausa)
+        if (!juegoComenzado)
+        {
+            ComenzarJuego();
+        }
+        else
+        {
+            if (!modoPausa)
         {
             textoPuntuacionDerecha.text = "Menu abierto";
             textoPuntuacionIzquierda.text = "Menu abierto";
@@ -266,7 +305,21 @@ public class GameManager : MonoBehaviour
             textoPuntuacionIzquierda.text = "Menu cerrado";
             modoPausa = false;
         }
-        
+        }
+    }
+
+    private void ActualizarTiempo()
+    {
+        if (!gameOver)
+        {
+            textoTimerIzquierda.text = "Tiempo restante: " + segundosRestantes + " seg";
+            textoTimerDerecha.text = "Tiempo restante: " + segundosRestantes + " seg";
+        }
+    }
+
+    private void ContarTiempo()
+    {
+        segundosRestantes--;
     }
 
 }
