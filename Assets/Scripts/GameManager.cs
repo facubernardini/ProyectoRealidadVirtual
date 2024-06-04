@@ -8,32 +8,18 @@ public class GameManager : MonoBehaviour
     private int puntuacion, cantToposActivos;
     public GameObject topo1, topo2, topo3, topo4, topo5, topo6, topo7, topo8, topo9, topo10, topo11, topo12, topo13, topo14, topo15;
     public Text textoPuntuacionIzquierda, textoPuntuacionDerecha;
-    public AudioSource sonidoGolpe;
+    public AudioSource sonidoGolpe, sonidoMenu;
+    private bool modoPausa;
 
     void Start()
     {
         puntuacion = 0;
         cantToposActivos = 0;
+        modoPausa = false;
 
-        textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
-        textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
-
-        InvokeRepeating("GenerarTopoAleatorio", 2, 4f);
-        topo1.SetActive(false);
-        topo2.SetActive(false);
-        topo3.SetActive(false);
-        topo4.SetActive(false);
-        topo5.SetActive(false);
-        topo6.SetActive(false);
-        topo7.SetActive(false);
-        topo8.SetActive(false);
-        topo9.SetActive(false);
-        topo10.SetActive(false);
-        topo11.SetActive(false);
-        topo12.SetActive(false);
-        topo13.SetActive(false);
-        topo14.SetActive(false);
-        topo15.SetActive(false);
+        ActualizarPuntuacion();
+        DesactivarTopos();
+        InvokeRepeating("GenerarTopoAleatorio", 2, 3f);
     }
 
     void Update()
@@ -43,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     public void ComenzarJuego()
     {
-        textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
+        ActualizarPuntuacion();
         InvokeRepeating("GenerarTopoAleatorio", 2, 4f);
     }
 
@@ -224,22 +210,63 @@ public class GameManager : MonoBehaviour
 
         cantToposActivos--;
         puntuacion++;
-        textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
-        textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
+        ActualizarPuntuacion();
         sonidoGolpe.Play();
-        // Reproducir sonido
     }
 
     private void GameOver()
     {
         if (cantToposActivos == 4)
         {
-            Debug.Log("GameOver");
             CancelInvoke ("GenerarTopoAleatorio");
+            DesactivarTopos();
             textoPuntuacionDerecha.text = "Perdiste! \n" + "Puntuación total: " + puntuacion;
             textoPuntuacionIzquierda.text = "Perdiste! \n" + "Puntuación total: " + puntuacion;
             // Cambia a escena GameOver donde muestra puntuacion, animacion, otro sonido, etc
         }
+    }
+
+    private void DesactivarTopos()
+    {
+        topo1.SetActive(false);
+        topo2.SetActive(false);
+        topo3.SetActive(false);
+        topo4.SetActive(false);
+        topo5.SetActive(false);
+        topo6.SetActive(false);
+        topo7.SetActive(false);
+        topo8.SetActive(false);
+        topo9.SetActive(false);
+        topo10.SetActive(false);
+        topo11.SetActive(false);
+        topo12.SetActive(false);
+        topo13.SetActive(false);
+        topo14.SetActive(false);
+        topo15.SetActive(false);
+    }
+
+    private void ActualizarPuntuacion()
+    {
+        textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
+        textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
+    }
+
+    public void AbrirMenu()
+    {
+        if (!modoPausa)
+        {
+            textoPuntuacionDerecha.text = "Menu abierto";
+            textoPuntuacionIzquierda.text = "Menu abierto";
+            modoPausa = true;
+            sonidoMenu.Play();
+        }
+        else
+        {
+            textoPuntuacionDerecha.text = "Menu cerrado";
+            textoPuntuacionIzquierda.text = "Menu cerrado";
+            modoPausa = false;
+        }
+        
     }
 
 }

@@ -19,6 +19,7 @@ TagManager:
   - Topo13
   - Topo14
   - Topo15
+  - HitboxMenu
   layers:
   - Default
   - TransparentFX

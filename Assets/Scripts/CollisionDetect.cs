@@ -26,7 +26,7 @@ public class CollisionDetect : MonoBehaviour
         if (objecto.gameObject.tag == "Topo4")
         {
             gameManager.GolpeTopo(4);
-        }
+        } 
 
         if (objecto.gameObject.tag == "Topo5")
         {
