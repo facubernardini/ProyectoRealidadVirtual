@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public GameObject topo1, topo2, topo3, topo4, topo5, topo6, topo7, topo8, topo9, topo10, topo11, topo12, topo13, topo14, topo15;
     public GameObject ARCamera;
     public Text textoPuntuacionIzquierda, textoPuntuacionDerecha, textoTimerIzquierda, textoTimerDerecha;
-    public AudioSource sonidoGolpe, sonidoMenu;
+    public AudioSource sonidoGolpe, sonidoMenu, sonidoInicioDeJuego, sonidoGameover, gameplayBackground, lobbyBackground;
     private bool modoPausa, juegoComenzado, gameOver;
     private int puntuacion, cantToposActivos;
     private int segundosRestantes;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
             GameOver();
             FijarPosicionARCamera();
             ActualizarTiempo();
+            ActualizarPuntuacion();
         }
     }
 
@@ -42,103 +43,107 @@ public class GameManager : MonoBehaviour
         ActualizarPuntuacion();
         InvokeRepeating("GenerarTopoAleatorio", 2, 4f);
         InvokeRepeating("ContarTiempo", 0, 1f);
+        Invoke("ReproducirSonidoDeFondo", 2f);
+        sonidoInicioDeJuego.Play();
+        lobbyBackground.Stop();
     }
 
     private void GenerarTopoAleatorio()
     {
-        int topo = Random.Range(1, 16);
-
-        if (topo == 1 && !topo1.activeSelf)
+        if (!modoPausa)
         {
-            topo1.SetActive(true);
-            cantToposActivos++;
-        }
+            int topo = Random.Range(1, 16);
 
-        if (topo == 2 && !topo2.activeSelf)
-        {
-            topo2.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 1 && !topo1.activeSelf)
+            {
+                topo1.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 3 && !topo3.activeSelf)
-        {
-            topo3.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 2 && !topo2.activeSelf)
+            {
+                topo2.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 4 && !topo4.activeSelf)
-        {
-            topo4.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 3 && !topo3.activeSelf)
+            {
+                topo3.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 5 && !topo5.activeSelf)
-        {
-            topo5.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 4 && !topo4.activeSelf)
+            {
+                topo4.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 6 && !topo6.activeSelf)
-        {
-            topo6.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 5 && !topo5.activeSelf)
+            {
+                topo5.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 7 && !topo7.activeSelf)
-        {
-            topo7.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 6 && !topo6.activeSelf)
+            {
+                topo6.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 8 && !topo8.activeSelf)
-        {
-            topo8.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 7 && !topo7.activeSelf)
+            {
+                topo7.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 9 && !topo9.activeSelf)
-        {
-            topo9.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 8 && !topo8.activeSelf)
+            {
+                topo8.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 10 && !topo10.activeSelf)
-        {
-            topo10.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 9 && !topo9.activeSelf)
+            {
+                topo9.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 11 && !topo11.activeSelf)
-        {
-            topo11.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 10 && !topo10.activeSelf)
+            {
+                topo10.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 12 && !topo12.activeSelf)
-        {
-            topo12.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 11 && !topo11.activeSelf)
+            {
+                topo11.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 13 && !topo13.activeSelf)
-        {
-            topo13.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 12 && !topo12.activeSelf)
+            {
+                topo12.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 14 && !topo14.activeSelf)
-        {
-            topo14.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 13 && !topo13.activeSelf)
+            {
+                topo13.SetActive(true);
+                cantToposActivos++;
+            }
 
-        if (topo == 15 && !topo15.activeSelf)
-        {
-            topo15.SetActive(true);
-            cantToposActivos++;
-        }
+            if (topo == 14 && !topo14.activeSelf)
+            {
+                topo14.SetActive(true);
+                cantToposActivos++;
+            }
 
-        // Reproducir sonido 
+            if (topo == 15 && !topo15.activeSelf)
+            {
+                topo15.SetActive(true);
+                cantToposActivos++;
+            }
+        }
     }
 
     public void GolpeTopo(int indice)
@@ -221,7 +226,6 @@ public class GameManager : MonoBehaviour
 
         cantToposActivos--;
         puntuacion++;
-        ActualizarPuntuacion();
         sonidoGolpe.Play();
     }
 
@@ -240,7 +244,9 @@ public class GameManager : MonoBehaviour
             textoTimerIzquierda.text = "";
 
             gameOver = true;
+            sonidoGameover.Play();
             // Cambia a escena GameOver donde muestra puntuacion, animacion, otro sonido, etc
+            // Golpear la base de los martillos para volver a comenzar
         }
     }
 
@@ -274,8 +280,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
-            textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
+            if (!modoPausa)
+            {
+                textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
+                textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
+            }
         }
     }
 
@@ -293,24 +302,25 @@ public class GameManager : MonoBehaviour
         else
         {
             if (!modoPausa)
-        {
-            textoPuntuacionDerecha.text = "Menu abierto";
-            textoPuntuacionIzquierda.text = "Menu abierto";
-            modoPausa = true;
-            sonidoMenu.Play();
-        }
-        else
-        {
-            textoPuntuacionDerecha.text = "Menu cerrado";
-            textoPuntuacionIzquierda.text = "Menu cerrado";
-            modoPausa = false;
-        }
+            {
+                textoPuntuacionDerecha.text = "PAUSA";
+                textoPuntuacionIzquierda.text = "PAUSA";
+                textoTimerIzquierda.text = "";
+                textoTimerDerecha.text = "";
+
+                modoPausa = true;
+                sonidoMenu.Play();
+            }
+            else
+            {
+                modoPausa = false;
+            }
         }
     }
 
     private void ActualizarTiempo()
     {
-        if (!gameOver)
+        if (!gameOver && !modoPausa)
         {
             textoTimerIzquierda.text = "Tiempo restante: " + segundosRestantes + " seg";
             textoTimerDerecha.text = "Tiempo restante: " + segundosRestantes + " seg";
@@ -319,7 +329,15 @@ public class GameManager : MonoBehaviour
 
     private void ContarTiempo()
     {
-        segundosRestantes--;
+        if (!modoPausa)
+        {
+            segundosRestantes--;
+        }
+    }
+
+    private void ReproducirSonidoDeFondo()
+    {
+        gameplayBackground.Play();
     }
 
 }
