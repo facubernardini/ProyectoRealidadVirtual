@@ -6,21 +6,20 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public GameObject topo1, topo2, topo3, topo4, topo5, topo6, topo7, topo8, topo9, topo10, topo11, topo12, topo13, topo14, topo15;
-    public GameObject ARCamera;
+    public GameObject ARCamera, renderizadoIzquierdoCamara, renderizadoDerechoCamara;
     public Text textoPuntuacionIzquierda, textoPuntuacionDerecha, textoTimerIzquierda, textoTimerDerecha;
     public AudioSource sonidoGolpe, sonidoMenu, sonidoInicioDeJuego, sonidoGameover, gameplayBackground, lobbyBackground;
     private bool modoPausa, juegoComenzado, gameOver;
-    private int puntuacion, cantToposActivos;
-    private int segundosRestantes;
+    private int puntuacion, segundosRestantes;
 
     void Start()
-    {
-        puntuacion = 0;
-        cantToposActivos = 0;
-        segundosRestantes = 60;
+    { 
         modoPausa = false;
         juegoComenzado = false;
         gameOver = false;
+
+        renderizadoDerechoCamara.SetActive(false);
+        renderizadoIzquierdoCamara.SetActive(false);
 
         ActualizarPuntuacion();
         DesactivarTopos();
@@ -31,7 +30,6 @@ public class GameManager : MonoBehaviour
         if (juegoComenzado)
         {
             GameOver();
-            FijarPosicionARCamera();
             ActualizarTiempo();
             ActualizarPuntuacion();
         }
@@ -39,11 +37,18 @@ public class GameManager : MonoBehaviour
 
     private void ComenzarJuego()
     {
+        puntuacion = 0;
+        segundosRestantes = 60;
         juegoComenzado = true;
+        gameOver = false;
+
         ActualizarPuntuacion();
-        InvokeRepeating("GenerarTopoAleatorio", 2, 4f);
+        PosicionarARCamera();
+        
+        InvokeRepeating("GenerarTopoAleatorio", 2, 3f);
         InvokeRepeating("ContarTiempo", 0, 1f);
         Invoke("ReproducirSonidoDeFondo", 2f);
+
         sonidoInicioDeJuego.Play();
         lobbyBackground.Stop();
     }
@@ -57,91 +62,76 @@ public class GameManager : MonoBehaviour
             if (topo == 1 && !topo1.activeSelf)
             {
                 topo1.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 2 && !topo2.activeSelf)
             {
                 topo2.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 3 && !topo3.activeSelf)
             {
                 topo3.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 4 && !topo4.activeSelf)
             {
                 topo4.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 5 && !topo5.activeSelf)
             {
                 topo5.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 6 && !topo6.activeSelf)
             {
                 topo6.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 7 && !topo7.activeSelf)
             {
                 topo7.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 8 && !topo8.activeSelf)
             {
                 topo8.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 9 && !topo9.activeSelf)
             {
                 topo9.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 10 && !topo10.activeSelf)
             {
                 topo10.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 11 && !topo11.activeSelf)
             {
                 topo11.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 12 && !topo12.activeSelf)
             {
                 topo12.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 13 && !topo13.activeSelf)
             {
                 topo13.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 14 && !topo14.activeSelf)
             {
                 topo14.SetActive(true);
-                cantToposActivos++;
             }
 
             if (topo == 15 && !topo15.activeSelf)
             {
                 topo15.SetActive(true);
-                cantToposActivos++;
             }
         }
     }
@@ -224,29 +214,27 @@ public class GameManager : MonoBehaviour
             topo15.SetActive(false);
         }
 
-        cantToposActivos--;
         puntuacion++;
         sonidoGolpe.Play();
     }
 
     private void GameOver()
     {
-        if (segundosRestantes == 0)
+        if (segundosRestantes <= 0 && !gameOver)
         {
             CancelInvoke ("GenerarTopoAleatorio");
             CancelInvoke("ContarTiempo");
+            CancelInvoke("ReproducirSonidoDeFondo");
             DesactivarTopos();
 
-            textoPuntuacionDerecha.text = "¡Se terminó el tiempo! \n" + "Puntuación total: " + puntuacion;
-            textoPuntuacionIzquierda.text = "¡Se terminó el tiempo! \n" + "Puntuación total: " + puntuacion;
+            textoTimerDerecha.text = "¡Se terminó el tiempo! \n" + "Puntuación total: " + puntuacion;
+            textoTimerIzquierda.text = "¡Se terminó el tiempo! \n" + "Puntuación total: " + puntuacion;
 
-            textoTimerDerecha.text = "";
-            textoTimerIzquierda.text = "";
+            textoPuntuacionDerecha.text = "\n \n Golpea los martillos para reiniciar el juego";
+            textoPuntuacionIzquierda.text = "\n \n Golpea los martillos para reiniciar el juego"; 
 
             gameOver = true;
             sonidoGameover.Play();
-            // Cambia a escena GameOver donde muestra puntuacion, animacion, otro sonido, etc
-            // Golpear la base de los martillos para volver a comenzar
         }
     }
 
@@ -269,6 +257,15 @@ public class GameManager : MonoBehaviour
         topo15.SetActive(false);
     }
 
+    private void ActualizarTiempo()
+    {
+        if (!gameOver && !modoPausa)
+        {
+            textoTimerIzquierda.text = "Tiempo restante: " + segundosRestantes + " seg";
+            textoTimerDerecha.text = "Tiempo restante: " + segundosRestantes + " seg";
+        }
+    }
+
     private void ActualizarPuntuacion()
     {
         if (!juegoComenzado)
@@ -280,7 +277,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (!modoPausa)
+            if (!modoPausa && !gameOver)
             {
                 textoPuntuacionIzquierda.text = "Puntuación: " + puntuacion;
                 textoPuntuacionDerecha.text = "Puntuación: " + puntuacion;
@@ -288,14 +285,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FijarPosicionARCamera()
+    private void PosicionarARCamera()
     {
         ARCamera.transform.position = new Vector3(0f, 1.2f, 0f);
     }
 
-    public void AbrirMenu()
+    public void InteraccionMartillos()
     {
-        if (!juegoComenzado)
+        if (!juegoComenzado || gameOver)
         {
             ComenzarJuego();
         }
@@ -308,22 +305,18 @@ public class GameManager : MonoBehaviour
                 textoTimerIzquierda.text = "";
                 textoTimerDerecha.text = "";
 
+                renderizadoDerechoCamara.SetActive(true);
+                renderizadoIzquierdoCamara.SetActive(true);
+
                 modoPausa = true;
                 sonidoMenu.Play();
             }
             else
             {
                 modoPausa = false;
+                renderizadoDerechoCamara.SetActive(false);
+                renderizadoIzquierdoCamara.SetActive(false);
             }
-        }
-    }
-
-    private void ActualizarTiempo()
-    {
-        if (!gameOver && !modoPausa)
-        {
-            textoTimerIzquierda.text = "Tiempo restante: " + segundosRestantes + " seg";
-            textoTimerDerecha.text = "Tiempo restante: " + segundosRestantes + " seg";
         }
     }
 

@@ -19,7 +19,7 @@ TagManager:
   - Topo13
   - Topo14
   - Topo15
-  - HitboxMenu
+  - HitboxInteraccionMartillo
   layers:
   - Default
   - TransparentFX

@@ -12,7 +12,7 @@ public class CameraManager : MonoBehaviour
         SetObliqueness();
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-        Application.targetFrameRate = 120;
+        Application.targetFrameRate = 144;
     }
 
     public void SetObliqueness()
