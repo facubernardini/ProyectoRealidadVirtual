@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
         ActualizarPuntuacion();
         PosicionarARCamera();
         
-        InvokeRepeating("GenerarTopoAleatorio", 2, 3f);
+        InvokeRepeating("GenerarTopoAleatorio", 5, 2.5f);
         InvokeRepeating("ContarTiempo", 0, 1f);
         Invoke("ReproducirSonidoDeFondo", 2f);
 
@@ -57,88 +57,123 @@ public class GameManager : MonoBehaviour
     {
         if (!modoPausa)
         {
-            int topo = Random.Range(1, 16);
+            bool topoGenerado = false;
+            float duracionTopo = Random.Range(6f, 10f);
 
-            if (topo == 1 && !topo1.activeSelf)
+            while (!topoGenerado)
             {
-                topo1.SetActive(true);
-            }
+                int topo = Random.Range(1, 16);
 
-            if (topo == 2 && !topo2.activeSelf)
-            {
-                topo2.SetActive(true);
-            }
+                if (topo == 1 && !topo1.activeSelf)
+                {
+                    topo1.SetActive(true);
+                    Invoke("OcultarTopo1", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 3 && !topo3.activeSelf)
-            {
-                topo3.SetActive(true);
-            }
+                if (topo == 2 && !topo2.activeSelf)
+                {
+                    topo2.SetActive(true);
+                    Invoke("OcultarTopo2", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 4 && !topo4.activeSelf)
-            {
-                topo4.SetActive(true);
-            }
+                if (topo == 3 && !topo3.activeSelf)
+                {
+                    topo3.SetActive(true);
+                    Invoke("OcultarTopo3", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 5 && !topo5.activeSelf)
-            {
-                topo5.SetActive(true);
-            }
+                if (topo == 4 && !topo4.activeSelf)
+                {
+                    topo4.SetActive(true);
+                    Invoke("OcultarTopo4", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 6 && !topo6.activeSelf)
-            {
-                topo6.SetActive(true);
-            }
+                if (topo == 5 && !topo5.activeSelf)
+                {
+                    topo5.SetActive(true);
+                    Invoke("OcultarTopo5", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 7 && !topo7.activeSelf)
-            {
-                topo7.SetActive(true);
-            }
+                if (topo == 6 && !topo6.activeSelf)
+                {
+                    topo6.SetActive(true);
+                    Invoke("OcultarTopo6", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 8 && !topo8.activeSelf)
-            {
-                topo8.SetActive(true);
-            }
+                if (topo == 7 && !topo7.activeSelf)
+                {
+                    topo7.SetActive(true);
+                    Invoke("OcultarTopo7", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 9 && !topo9.activeSelf)
-            {
-                topo9.SetActive(true);
-            }
+                if (topo == 8 && !topo8.activeSelf)
+                {
+                    topo8.SetActive(true);
+                    Invoke("OcultarTopo8", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 10 && !topo10.activeSelf)
-            {
-                topo10.SetActive(true);
-            }
+                if (topo == 9 && !topo9.activeSelf)
+                {
+                    topo9.SetActive(true);
+                    Invoke("OcultarTopo9", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 11 && !topo11.activeSelf)
-            {
-                topo11.SetActive(true);
-            }
+                if (topo == 10 && !topo10.activeSelf)
+                {
+                    topo10.SetActive(true);
+                    Invoke("OcultarTopo10", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 12 && !topo12.activeSelf)
-            {
-                topo12.SetActive(true);
-            }
+                if (topo == 11 && !topo11.activeSelf)
+                {
+                    topo11.SetActive(true);
+                    Invoke("OcultarTopo11", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 13 && !topo13.activeSelf)
-            {
-                topo13.SetActive(true);
-            }
+                if (topo == 12 && !topo12.activeSelf)
+                {
+                    topo12.SetActive(true);
+                    Invoke("OcultarTopo12", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 14 && !topo14.activeSelf)
-            {
-                topo14.SetActive(true);
-            }
+                if (topo == 13 && !topo13.activeSelf)
+                {
+                    topo13.SetActive(true);
+                    Invoke("OcultarTopo13", duracionTopo);
+                    topoGenerado = true;
+                }
 
-            if (topo == 15 && !topo15.activeSelf)
-            {
-                topo15.SetActive(true);
+                if (topo == 14 && !topo14.activeSelf)
+                {
+                    topo14.SetActive(true);
+                    Invoke("OcultarTopo14", duracionTopo);
+                    topoGenerado = true;
+                }
+
+                if (topo == 15 && !topo15.activeSelf)
+                {
+                    topo15.SetActive(true);
+                    Invoke("OcultarTopo15", duracionTopo);
+                    topoGenerado = true;
+                }
             }
         }
     }
 
     public void GolpeTopo(int indice)
     {
-
         if (indice == 1)
         {
             topo1.SetActive(false);
@@ -331,6 +366,81 @@ public class GameManager : MonoBehaviour
     private void ReproducirSonidoDeFondo()
     {
         gameplayBackground.Play();
+    }
+
+    private void OcultarTopo1()
+    {
+        topo1.SetActive(false);
+    }
+
+    private void OcultarTopo2()
+    {
+        topo2.SetActive(false);
+    }
+
+    private void OcultarTopo3()
+    {
+        topo3.SetActive(false);
+    }
+
+    private void OcultarTopo4()
+    {
+        topo4.SetActive(false);
+    }
+
+    private void OcultarTopo5()
+    {
+        topo5.SetActive(false);
+    }
+
+    private void OcultarTopo6()
+    {
+        topo6.SetActive(false);
+    }
+
+    private void OcultarTopo7()
+    {
+        topo7.SetActive(false);
+    }
+
+    private void OcultarTopo8()
+    {
+        topo8.SetActive(false);
+    }
+
+    private void OcultarTopo9()
+    {
+        topo9.SetActive(false);
+    }
+
+    private void OcultarTopo10()
+    {
+        topo10.SetActive(false);
+    }
+
+    private void OcultarTopo11()
+    {
+        topo11.SetActive(false);
+    }
+
+    private void OcultarTopo12()
+    {
+        topo12.SetActive(false);
+    }
+
+    private void OcultarTopo13()
+    {
+        topo13.SetActive(false);
+    }
+
+    private void OcultarTopo14()
+    {
+        topo14.SetActive(false);
+    }
+
+    private void OcultarTopo15()
+    {
+        topo15.SetActive(false);
     }
 
 }
